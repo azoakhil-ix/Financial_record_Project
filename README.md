@@ -9,7 +9,17 @@ git clone https://github.com
 cd transaction-analyzer
 ```
 
-### 2. Set Up a Virtual Environment (Recommended)
+### 2. Prepare Your Chase Data (Required)
+This project requires a transaction history file from your Chase checking account to run.
+
+1. Log into your **Chase Online Banking** account.
+2. Export or download your recent checking account activity as a **CSV** file.
+3. **Rename the file:** Chase automatically names this file using your account details (e.g., `Chase2552_Activity_20260919.csv`). To protect your privacy and ensure the script recognizes it, rename the file to **`chase_activity.csv`**.
+4. Place the renamed file directly into the root directory of this project.
+
+> 🔒 **Security Note:** Never commit your real financial data to GitHub. Ensure `chase_activity.csv` is added to your `.gitignore` file before pushing any code.
+
+### 3. Set Up a Virtual Environment (Recommended)
 Isolate your project dependencies by creating a local virtual environment:
 
 * **macOS / Linux:**
@@ -23,7 +33,7 @@ Isolate your project dependencies by creating a local virtual environment:
   venv\Scripts\activate
   ```
 
-### 3. Install Dependencies
+### 4. Install Dependencies
 When the project expands to use external tools (like `pandas` for advanced data tracking or `matplotlib` for generating financial charts), install them instantly using the package manager:
 
 ```bash
