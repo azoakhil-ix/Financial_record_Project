@@ -13,7 +13,7 @@ class Transaction:
         self.check_or_slip = check_or_slip
 
 # Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #
-file_name = "Chase2552_Activity_20260919.csv"
+file_name = "Bank_Activity_20260919.csv"
 transactions = []
 with open(file_name, "r",encoding="utf-8") as file:
     reader = csv.reader(file)
@@ -28,6 +28,4 @@ with open(file_name, "r",encoding="utf-8") as file:
 
 
 
-    # Equivalent to Java's toString() method
-    def __repr__(self):
-        return f"Transaction({self.date}, {self.description}, ${self.amount:.2f})"
+
