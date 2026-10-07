@@ -1,44 +1,106 @@
-## 📦 Installation & Setup
+# Personal Expense & Decision System
 
-Follow these steps to get your development environment configured. While this project currently uses Python's built-in libraries, these steps ensure your environment stays clean and organized as the project grows.
+A Python-based financial data system for importing, cleaning, storing, and analyzing transaction data.
+
+The project currently uses **SQLAlchemy** and **SQLite** to transform raw bank transaction exports into structured, persistent transaction records. The import pipeline normalizes transaction data and detects previously imported transactions to prevent duplicate records.
+
+## Current Features
+
+- Import transaction data from CSV files
+- Normalize transaction descriptions and transaction types
+- Store transaction records persistently using SQLAlchemy ORM and SQLite
+- Use decimal-based fields for monetary values
+- Detect and skip previously imported transactions
+- Keep private financial data outside version control
+
+## In Development
+
+- Automated transaction categorization
+- Configurable categorization rules
+- Spending and cash-flow analysis
+- Machine-learning-assisted transaction classification
+- Personal financial decision support
+
+## Installation & Setup
 
 ### 1. Clone the Repository
-Open your terminal and clone the project to your local machine:
+
 ```bash
-git clone https://github.com
-cd transaction-analyzer
+git clone https://github.com/azoakhil-ix/Financial_record_Project
+cd Financial_record_Project
 ```
 
-### 2. Prepare Your Chase Data (Required)
-This project requires a transaction history file from your Chase checking account to run.
+### 2. Create a Virtual Environment
 
-1. Log into your **Chase Online Banking** account.
-2. Export or download your recent checking account activity as a **CSV** file.
-3. **Rename the file:** Chase automatically names this file using your account details (e.g., `Chase2552_Activity_20260919.csv`). To protect your privacy and ensure the script recognizes it, rename the file to **`chase_activity.csv`**.
-4. Place the renamed file directly into the root directory of this project.
-
-> 🔒 **Security Note:** Never commit your real financial data to GitHub. Ensure `chase_activity.csv` is added to your `.gitignore` file before pushing any code.
-
-### 3. Set Up a Virtual Environment (Recommended)
-Isolate your project dependencies by creating a local virtual environment:
-
-* **macOS / Linux:**
-  ```bash
-  python3 -m venv venv
-  source venv/bin/activate
-  ```
-* **Windows:**
-  ```bash
-  python -m venv venv
-  venv\Scripts\activate
-  ```
-
-### 4. Install Dependencies
-When the project expands to use external tools (like `pandas` for advanced data tracking or `matplotlib` for generating financial charts), install them instantly using the package manager:
+macOS / Linux:
 
 ```bash
-pip install --upgrade pip
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Windows:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+### 3. Install Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-> 💡 **Note for Contributors:** If you install any new external libraries during development, remember to freeze your environment changes back into the text file by running: `pip freeze > requirements.txt`.
+### 4. Add Transaction Data
+
+Create the private data directory:
+
+```bash
+mkdir -p data/private
+```
+
+Place your bank transaction CSV inside `data/private/`.
+
+The current importer expects the Chase CSV format:
+
+```text
+Details, Posting Date, Description, Amount, Type, Balance, Check or Slip
+```
+
+Private transaction data and the local SQLite database are excluded from version control through `.gitignore`.
+
+> **Security:** Never commit real bank transaction data, account information, `.env` files, or the generated financial database to a public repository.
+
+## Running the Project
+
+With the virtual environment activated:
+
+```bash
+python main.py
+```
+
+The application imports the transaction data, normalizes relevant fields, stores new transactions in SQLite, and skips transactions that have already been imported.
+
+## Project Structure
+
+```text
+Financial_record_Project/
+├── data/
+│   └── private/          # Private transaction files (not committed)
+├── src/
+│   ├── database.py       # SQLite and SQLAlchemy configuration
+│   ├── importer.py       # CSV parsing and transaction ingestion
+│   └── models.py         # Database models
+├── main.py               # Application entry point
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
+
+## Technology
+
+- Python
+- SQLAlchemy
+- SQLite
+- Git
