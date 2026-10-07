@@ -1,0 +1,3 @@
+python-dateutil
+pip install sqlalchemy
+pip freeze > requirements.txt

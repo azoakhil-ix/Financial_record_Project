@@ -13,29 +13,30 @@ class Transaction:
         self.balance = balance
         self.check_or_slip = check_or_slip
 
-# Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #
-file_name = "Bank_Activity_20260919.csv"
-transactions = []
-# the following block of code reads the csv file and stores each transaction as objects in a list.
-with open(file_name, mode="r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    today = date.today()# todays date
-    first_line_counter = True
-    for row_lst in reader:
-        if first_line_counter:
-            first_line_counter = False
-            continue
-        #row_lst is a list of strings, each string is a column in the csv file. some elements can be empty.
-        # print(row_lst)
-        
-        curr_date = datetime.strptime(row_lst[1], "%m/%d/%Y").date()
-        # print(raw_date)
 
-        if curr_date < today-relativedelta(months=1):
-            break
-        # print(curr_date)
-        transaction = Transaction(row_lst[0],curr_date, row_lst[2], row_lst[3],row_lst[4],row_lst[5],row_lst[6])
-        transactions.append(transaction)
+def clean_text(text):
+    return " ".join(text.split())
+
+def load_transactions(file_path):
+    transactions = []
+    # Details,Posting Date,Description,Amount,Type,Balance,Check or Slip #
+    # the following block of code reads the csv file and stores each transaction as objects in a list.
+    with open(file_path, mode="r", encoding="utf-8") as file:
+        reader = csv.reader(file)
+        next(reader)
+        # today = date.today()# todays date
+        for row_lst in reader:
+            #row_lst is a list of strings, each string is a column in the csv file. some elements can be empty.
+            curr_date = datetime.strptime(row_lst[1], "%m/%d/%Y").date() # convert string to date object
+            transaction = Transaction((clean_text(row_lst[0])),curr_date, (clean_text(row_lst[2])), row_lst[3],row_lst[4],row_lst[5],row_lst[6])
+            transactions.append(transaction)
+    return transactions
+
+
+file = "data/private/Bank_Activity_20260919.csv"
+transactions = load_transactions(file)
+    
+
 revenue = 0
 expense = 0
 for tr in transactions:
